@@ -5,7 +5,7 @@ import person from "../../genius-car-resources-main/assets/images/about_us/perso
 const About = () => {
   return (
     <div>
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero  bg-base-200">
         <div className="hero-content flex-col lg:flex-row">
           <div className=" relative w-1/2">
             <img
