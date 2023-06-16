@@ -1,17 +1,16 @@
-import React, { createContext, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Contexts/AuthProvider";
 
-const Login = () => {
+const SignUp = () => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
-  const { signInWithEmail } = useContext(AuthContext);
+  const { handleRegister } = useContext(AuthContext);
   const onSubmit = (data) => {
-    console.log(data.email, data.password);
-    signInWithEmail(data.email, data.password)
+    handleRegister(data.email, data.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -22,6 +21,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
+        // ..
       });
   };
 
@@ -30,7 +30,7 @@ const Login = () => {
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
+            <h1 className="text-5xl font-bold">Sign Up now!</h1>
             <p className="py-6">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
@@ -42,53 +42,59 @@ const Login = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">What is your Email?</span>
+                    <span className="label-text">What is your name?</span>
                   </label>
                   <input
-                    type="email"
-                    placeholder="Enter Email"
-                    className="input input-bordered w-full max-w-xs"
-                    {...register("email", {
-                      required: "Email is Required",
-                      minLength: {
-                        value: 6,
-                        message: "Must be 6 Characyers" // JS only: <p>error message</p> TS only support string
-                      },
-                      pattern: {
-                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                        message: "Invalid Format" // JS only: <p>error message</p> TS only support string
-                      }
+                    type="text"
+                    {...register("name", {
+                      required: "Name is Required" // JS only: <p>error message</p> TS only support string
                     })}
+                    placeholder="First name"
+                    className="input input-bordered w-full max-w-xs"
                   />
-                  {errors.email && (
-                    <p className="text-red-500">{errors.email?.message}</p>
+                  {errors.name && (
+                    <span className="text-red-300">{errors.name?.message}</span>
                   )}
                 </div>
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">What is your Password?</span>
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    {...register("email", {
+                      required: "Email is Required" // JS only: <p>error message</p> TS only support string
+                    })}
+                    placeholder="Enter Email"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                  {errors.email && (
+                    <span className="text-red-300">{errors.name?.message}</span>
+                  )}
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Password?</span>
                   </label>
                   <input
                     type="password"
+                    {...register("password", {
+                      required: "Password is Required" // JS only: <p>error message</p> TS only support string
+                    })}
                     placeholder="Enter Password"
                     className="input input-bordered w-full max-w-xs"
-                    {...register("password", {
-                      required: "Password is Required",
-                      minLength: {
-                        value: 6,
-                        message: "Must be 6 Characyers" // JS only: <p>error message</p> TS only support string
-                      }
-                    })}
                   />
                   {errors.password && (
-                    <p className="text-red-500">{errors.password?.message}</p>
+                    <span className="text-red-300">
+                      {errors.password?.message}
+                    </span>
                   )}
                 </div>
-                <div className="form-control mt-6">
-                  <button type="submit" className="btn btn-primary">
-                    Login
-                  </button>
-                </div>
+
+                <input
+                  className="input input-bordered w-full max-w-xs"
+                  type="submit"
+                />
               </form>
             </div>
           </div>
@@ -98,4 +104,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
