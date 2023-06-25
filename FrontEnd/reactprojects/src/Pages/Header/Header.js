@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthProvider";
 
 const Header = () => {
+  const { handleSignOut, user } = useContext(AuthContext);
+  console.log(user);
+  handleSignOut()
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   const menuItems = (
     <>
       {" "}
@@ -11,8 +22,15 @@ const Header = () => {
         </Link>
       </li>
       <li>
-        <Link to='/login'>Login</Link>
+        <Link to="/Checkout">CheckOut</Link>
       </li>
+      {user?.uid ? (
+        <button onClick={handleSignOut}>SignOut</button>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (

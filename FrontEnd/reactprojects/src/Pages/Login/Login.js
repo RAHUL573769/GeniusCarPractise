@@ -1,6 +1,7 @@
-import React, { createContext, useContext } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../Contexts/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -9,12 +10,18 @@ const Login = () => {
     formState: { errors }
   } = useForm();
   const { signInWithEmail } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
   const onSubmit = (data) => {
     console.log(data.email, data.password);
     signInWithEmail(data.email, data.password)
       .then((userCredential) => {
         // Signed in
+
         const user = userCredential.user;
+        navigate(from, { replace: true });
         console.log(user);
         // ...
       })

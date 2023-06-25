@@ -90,7 +90,15 @@ const SignUp = () => {
                     </span>
                   )}
                 </div>
-
+                <div className="form-control">
+                  <label className="label cursor-pointer">
+                    <span className="label-text">Remember me</span>
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-primary"
+                    />
+                  </label>
+                </div>
                 <input
                   className="input input-bordered w-full max-w-xs"
                   type="submit"
